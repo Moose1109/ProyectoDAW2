@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- En el head de tu HTML -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<title>Ventas</title>
+</head>
+<body>
+
+	<header>
+	 <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
+	 
+	    <div class="container-fluid">
+	    
+		    <a class="navbar-brand" href="MenuPrincipalCliente.html"><img title="Logo" src="img/logo.png" width ="200px" height= "60px"></a>
+		    
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    
+	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	      
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="MenuPrincipal.html">Inicio</a>
+	        </li>
+
+	        <li class="nav-item dropdown">
+	        
+	          <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Mantemiento
+	          </a>
+	          
+	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <li><a class="dropdown-item" href="cargarProducto" >Productos</a></li>
+	            <li><a class="dropdown-item" href="cargarCliente" >Clientes</a></li>
+	            <li><a class="dropdown-item" href="cargarEmpleado" >Empleados</a></li>
+
+	          </ul>
+	          
+	        </li>
+	        
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="cargarVenta">Ventas</a>
+	        </li>
+	          
+	        <li class="nav-item dropdown">
+	           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Reportes</a>
+	           
+	           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <li><a class="dropdown-item" href="/reporteUno" target="_blank">Ventas*Empleado</a></li>
+	            <li><a class="dropdown-item" href="/reporteDos" target="_blank">TotalVenta*Empleado</a></li>
+	            <li><a class="dropdown-item" href="/reporteTres" target="_blank">Producto*Categoria</a></li>
+	            <li><a class="dropdown-item" href="/reporteCuatro" target="_blank" >Ventas*Cliente</a></li>
+	            </ul>
+	            
+	        </li>
+
+	      </ul>
+	      
+	      <div class="dropdown" th:if="${usuario != null}">
+		    <button style="border:none; color:black;" class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		        <span th:text="${usuario.usuario}"></span>
+		    </button>
+		    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
+		        <a class="dropdown-item" href="#"><img src="img/usuario.jpg" alt="60" width="60"></a>
+		        <a class="dropdown-item" href="#"><span th:text="${usuario.usuario}"></span></a>
+		        <a class="dropdown-item" href="#"></a>
+		
+		        <div class="dropdown-divider"></div>
+		
+		        <form action="" method="post">
+		            <button type="submit" class="dropdown-item" value="Salir">Salir</button>
+		        </form>
+		    </div>
+		</div>
+
+				
+	  </div>
+	</nav>
+	
+	
+	</header>
+
+	<br>
+	<h1 align="center">Registro de Ventas</h1>
+		<br>	
+		<div class="d-flex" >
+			
+			<div class="col-sm-4">		
+				<div class="card">
+				
+					<form action="/guardarDetalleProducto" method="post">	
+						<div class="card-body">
+							<div class="form-group">
+								<label>Datos del Cliente</label>
+							</div>
+							
+						<div class="form-group col-md-9">
+						
+							<label for="inputCli">Puesto</label> 
+							
+							<select id="inputCliente" class="form-control">
+								<option value="-1">Seleccione...</option>
+								<option th:each="c : ${lstCliente}" th:value="${c.idcliente}" th:text="${c.puesto} +' ' + ${c.nomcliente}" th:data-codigo="${c.idcliente}"  th:data-cliente="${c.nomcliente} + ' '+ ${c.apecliente}" th:data-dni="${c.dni}" th:data-telefono="${c.celular}"></option>
+								
+							</select>
+							<br>
+							<div class="form-group d-flex">
+								
+								<div class="col-sm-6 ">
+									<label for="inputCli">Cliente</label>
+									<input type="text" id="nomcliente"  class="form-control" placeholder="Cliente" readonly>
+								</div>
+																			
+									<div class="col-sm-6">
+										<label for="inputCli">DNI</label>
+										<input type="text" id="dni"  class="form-control" placeholder="DNI" readonly>
+									</div>
+										    
+								    <div class="col-sm-5">
+										<label for="inputCli">celular</label>
+										<input type="text" id="telefono"  class="form-control" placeholder="Telefono" readonly>
+									</div>
+							</div>
+						
+						</div>
+							
+							<div class="form-group">
+								<label> Datos Productos</label>
+							</div>
+								<div class="form-group col-md-9">
+								
+									<div class="form-group d-flex " >	
+										<div class="col-sm-9">
+										    <label for="inputCat">Producto</label>
+											 <select id="inputCatProducto" class="form-control" name="codproducto"  >
+											    <option value="-1">Seleccione...</option>
+											    <option th:each="p : ${lstProducto}" th:value="${p.codproducto}" th:text="${p.nomproducto}" th:data-precio="${p.precio}" th:data-stock="${p.stock}"></option>
+											</select>
+										
+										</div>
+									</div>									    
+									<br>
+									<div class="form-group d-flex">
+										<div class="col-sm-6 ">
+											<label for="inputCat">Precio</label>
+									        <input type="number" id="precio"  name="precio"class="form-control" placeholder="S/.0.00" readonly>
+									    </div>
+																		
+									      <div class="col-sm-6">
+									        <label for="inputCat">Cantidad</label>
+									        <input type="text" name="cantidad"  class="form-control" placeholder="Cantidad">
+									    </div>
+									    
+									    <div class="col-sm-5">
+										     <label for="inputCat">Stock</label>
+									        <input type="number" id="stock"  name="stock" class="form-control" placeholder="Stock" readonly>
+									    </div>
+									</div>
+								</div>
+								
+					   	<div class="form-group">
+				            <input type="submit"  value="Agregar" class="btn btn-outline-info">		         
+				        </div>	
+						</div>					
+					</form>			
+				</div>
+			</div>
+			
+			<div class="col-sm-7">
+				<div class="card">
+					<div class="card-body">
+						<div class=" d-flex  " >
+						
+							<div class="col-sm-5">
+								<a href="/cargarListaVenta"class="btn btn-info" >Lista Venta</a>
+							</div>
+							
+							<div class="ml-auto d-flex col-sm-5" >
+								<label>Numero Serie</label>								
+								<input type="text" name="nroserie" th:value="${nroserie}" class="form-control">
+							</div>
+						</div>
+						<br>
+						<table   class="table table-hover" >
+						
+							<thead >
+								<tr>
+								
+								<th>Nro</th>
+								<th>Codigo</th>
+								<th>Producto</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>SubTotal</th>
+								<th>Acciones</th>
+								
+								</tr>
+								
+							</thead>
+							
+							<tbody >
+							    <tr th:each="item, itemStat : ${listado}">
+							        <td th:text="${itemStat.index + 1}"></td>
+							        <td th:text="${item.codproducto}"></td>
+							        <td th:text="${item.nomproducto}"></td>  
+							        <td th:text="${item.precio}"></td>
+							        <td th:text="${item.cantidad}"></td>
+							        <td th:text="${item.precioventa}"></td>
+							        <td class="d-flex">
+							            <a th:href="@{'/eliminarItem/'+ ${itemStat.index}}" class="btn btn-danger" style="margin-left:10px;">Eliminar</a>
+							        </td>
+							    </tr>
+							</tbody>
+	
+						</table>
+					
+					
+					</div>
+					
+					<div class="card-footer d-flex">
+						<div class="col-sm-6">
+						  <form id="generarVentaForm" action="/generarVenta" method="post"> 
+						    <input type="hidden" id="codigoCliente" name="idcliente" />
+						 
+						    <div class="col-sm-6">
+						        <input type="submit" value="GenerarVenta" class="btn btn-success" >
+						    </div>
+						</form>
+
+						</div>
+						
+						<div class="col-sm-4 d-flex">
+							<label for="inputCat">Total a Pagar</label>
+							<input type="text" name="totalPagar"  th:value="${totalPagar}" class="form-control">
+						</div>
+	
+					</div>
+				
+				</div>			
+			</div>
+		</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <script src="Funciones.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+</body>
+</html>

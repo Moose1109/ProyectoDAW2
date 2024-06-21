@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<h1 align="center">Actualizacion de Empleado</h1>
+<br>
+<div class="container">
+<form action="/grabarPro" th:object="${producto}" method = "post">
+
+	
+	<table border="1" align="center">
+	
+		<tr>
+			<td>Codigo:</td>
+			<td><input type="text" name="txt_cod" th:field="*{codproducto}" th:readonly="readonly" ></td>
+		</tr>
+		
+		<tr>
+			<td>Nombres:</td>
+			<td><input type="text" name="txt_nomPro" th:field="*{nomproducto}" > </td>
+		</tr>
+		
+		<tr>
+					
+		 	<td>Categoria:</td>
+			<td>								
+				<select name="cbo_categoria"  th:field="*{idcategoria}" >
+				
+				<option value="0">Seleccionar</option> 									
+				<option th:each="c : ${lstCategorias}" th:value="${c.idcategoria}" th:text="${c.nomcategoria}"></option>
+				
+				</select>
+						
+			</td>
+					
+		</tr>
+				
+		
+		<tr>
+			<td>Precio:</td>
+			<td><input type="text" name="txt_precio" th:field="*{precio}"></td>
+		</tr>
+
+		<tr>
+			<td>stock:</td>
+			<td><input type="text" name="txt_stock" th:field="*{stock}"></td>
+		</tr>
+
+		<tr>
+			<td class="d-flex">
+				<button type="submit" class="btn btn-primary">Editar</button>
+				<a href ="/cargarProducto" class="btn btn-primary" >Retornar</a>
+				<div th:text="${mensaje}" th:class="${cssmensaje}" role="alert"></div>
+			</td>
+		</tr>
+
+	</table>
+
+</form>
+
+	</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
