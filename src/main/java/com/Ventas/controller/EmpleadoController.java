@@ -3,31 +3,90 @@ package com.Ventas.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.Ventas.model.Empleados;
 import com.Ventas.repository.IEmpleadosRepository;
+import com.Ventas.service.EmpleadoService;
+
 
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
+@RequestMapping("/api/empleados")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EmpleadoController {
 
 	@Autowired
 	private IEmpleadosRepository repoEmp; 
 	
+	@Autowired
+	private EmpleadoService service; 
 	
-	@GetMapping("/cargaLogin")
+	@GetMapping
+	public ResponseEntity<List<Empleados>> listarEmpleado() {
+		return ResponseEntity.ok(service.listarEmpleado());
+	}
+
+	@PostMapping
+	public ResponseEntity<Empleados> agregarEmpleados(
+			@RequestBody Empleados empleados) {
+		Empleados nuevo = service.agregarEmpleados(empleados);		
+		return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Empleados> buscarEmpleados(
+			@PathVariable String id) {
+		return ResponseEntity.ok(service.buscarEmpleados(id));
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Empleados> editarEmpleados(
+			@PathVariable String id, 
+			@RequestBody Empleados empleados) {
+		Empleados e = service.buscarEmpleados(id);
+		e.setNomempleado(empleados.getNomempleado());
+		e.setApeempleado(empleados.getApeempleado());
+		e.setDni(empleados.getDni());
+		e.setFechanacimiento(empleados.getFechanacimiento());
+		e.setEstado(empleados.getEstado());
+		e.setUsuario(empleados.getUsuario());
+		e.setPass(empleados.getPass());
+		service.editarEmpleados(e);
+
+		return new ResponseEntity<>(e, HttpStatus.CREATED);
+	}
+	
+	
+	@DeleteMapping("/{id}")
+	public String eliminarProducto(@PathVariable String id){
+		repoEmp.deleteById(id);
+		return "Producto eliminado";
+	}
+	
+	
+	
+	
+	/*@GetMapping("/cargaLogin")
 	public String abrirPagLogin() {
 		return "login";   
 	}
-	
+	//listar
 	@GetMapping("cargarEmpleado")
 	public String listarEmpleado(Model model , HttpSession session,@RequestParam(value = "estado", defaultValue = "1") int estado) {
 		
@@ -57,6 +116,7 @@ public class EmpleadoController {
 		return "EmpleadoListar";
 	}
 	
+	//registrar
 	@GetMapping("regisEmpleado")
 	public String registrarEmpleado(Model model) {
 		
@@ -65,6 +125,8 @@ public class EmpleadoController {
 		return "EmpleadoModulo";
 	}
 	
+	
+	//actualizar
 	@GetMapping("/editarEmpleado/{idempleado}")
 	public String editar(@PathVariable String idempleado, Model model ) {
 
@@ -77,6 +139,7 @@ public class EmpleadoController {
 	
 	}
 
+	//eliminar
 	@GetMapping("/eliminarEmpleado/{idempleado}")
 	public String delete(Model model,@ModelAttribute Empleados empleado ) {
 			
@@ -95,7 +158,7 @@ public class EmpleadoController {
 		}
 			
 	return "redirect:/cargarEmpleado";
-	}
+	}*/
 	
 	@PostMapping("/grabarEmp")
 	public String grabar(@ModelAttribute Empleados empleados , Model model) {

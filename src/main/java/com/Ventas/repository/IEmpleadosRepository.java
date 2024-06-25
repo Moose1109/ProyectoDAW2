@@ -13,5 +13,5 @@ public interface IEmpleadosRepository extends JpaRepository<Empleados,String>{
 	
 	Empleados findByUsuarioAndPass(String usuario, String pass);
 
-	List<Empleados> findByEstado(int estado);
+	/*List<Empleados> findByEstado(int estado);*/
 }
