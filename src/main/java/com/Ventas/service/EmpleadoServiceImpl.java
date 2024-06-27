@@ -36,7 +36,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	@Override
 	public Empleados editarEmpleados(Empleados e) {
 
-		return repoEmp.save(e);
+		return repoEmp.save(e)	;
 	}
 
 }

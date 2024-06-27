@@ -2,29 +2,54 @@ package com.Ventas.controller;
 
 import java.util.List;
 
+import com.Ventas.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.*;
 
 import com.Ventas.model.Cliente;
-import com.Ventas.model.Empleados;
-import com.Ventas.model.Producto;
-import com.Ventas.repository.IClienteRepository;
 
-import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
+@RequestMapping("/api/clientes")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ClientesController {
 
 	@Autowired
-	private IClienteRepository repoCli;
-	
+	private ClienteService service;
+
+	@GetMapping
+	public ResponseEntity<List<Cliente>> listarClientes() {
+		return ResponseEntity.ok(service.listarClientes());
+	}
+
+	@PostMapping
+	public ResponseEntity<Cliente> registrarCliente(@RequestBody Cliente cliente) {
+		Cliente nuevo = service.registrarCliente(cliente);
+		return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Cliente> buscarCliente(@PathVariable String id) {
+		Cliente cliente = service.buscarCliente(id);
+		return cliente != null ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
+	}
+
+	@PutMapping
+	public ResponseEntity<Cliente> actualizarCliente(@RequestBody Cliente cliente) {
+		Cliente actualizado = service.actualizarCliente(cliente);
+		return ResponseEntity.ok(actualizado);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> eliminarCliente(@PathVariable String id) {
+		service.eliminarCliente(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	/*
 	@GetMapping("/cargarCliente")
 	public String cargarCliente(Model model, HttpSession session,@RequestParam(value = "estado", defaultValue = "1") int estado) {
 		
@@ -118,5 +143,5 @@ public class ClientesController {
 	return "redirect:/cargarCliente";
 	}
 
-
+	*/
 	}
