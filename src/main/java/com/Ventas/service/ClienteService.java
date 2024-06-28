@@ -10,5 +10,5 @@ public interface ClienteService {
     Cliente registrarCliente(Cliente c);
     Cliente buscarCliente(String id);
     Cliente actualizarCliente(Cliente c);
-    void eliminarCliente(String id);
+    boolean eliminarCliente(String id);
 }
