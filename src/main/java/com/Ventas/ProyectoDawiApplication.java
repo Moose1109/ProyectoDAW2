@@ -12,9 +12,5 @@ public class ProyectoDawiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoDawiApplication.class, args);
 	}
- 
-	@GetMapping("/")
-	public String redirectToInicio() {
-		return "redirect:/MenuPrincipal.html";
-	}
+
 }
