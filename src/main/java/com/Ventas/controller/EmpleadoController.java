@@ -1,5 +1,6 @@
 package com.Ventas.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Ventas.model.Empleados;
@@ -73,11 +75,20 @@ public class EmpleadoController {
 	}
 	
 	
-	@DeleteMapping("/{id}")
-	public String eliminarProducto(@PathVariable String id){
-		repoEmp.deleteById(id);
-		return "Producto eliminado";
-	}
+	@DeleteMapping("{id}")
+    @ResponseBody
+    public ResponseEntity<?> eliminarFuncion(@PathVariable String id) {
+        String mensaje = "Funcion eliminada correctamente";
+        HashMap<String, Object> salida = new HashMap<>();
+        try {
+            service.eliminarEmpleados(id);
+            mensaje = "Se elimino correctamente";
+        } catch (Exception ex) {
+            mensaje = "Error al eliminar la funcion: " + ex.getMessage();
+        }
+        salida.put("mensaje", mensaje);
+        return ResponseEntity.ok(salida) ;
+    }
 	
 	
 	

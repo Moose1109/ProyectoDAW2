@@ -14,6 +14,6 @@ public interface EmpleadoService {
 	
 	public Empleados editarEmpleados (Empleados e);
 	
-	
+	public void eliminarEmpleados(String id);
 	
 }

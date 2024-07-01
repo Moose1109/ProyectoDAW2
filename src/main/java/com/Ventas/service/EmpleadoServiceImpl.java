@@ -39,4 +39,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 		return repoEmp.save(e)	;
 	}
 
+	@Override
+	public void eliminarEmpleados(String id) {
+		repoEmp.deleteById(id);
+	}
+
+
+
+
 }
