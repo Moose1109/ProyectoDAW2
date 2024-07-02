@@ -26,7 +26,7 @@ public class ProductoServiceImpl implements ProductoService{
 
 	@Override
 	public Producto buscarProducto(String id) {
-		return repoProd.findById(id).orElse(null);
+		return repoProd.findById(id).get();
 	}
 
 	@Override

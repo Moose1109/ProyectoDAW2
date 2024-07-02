@@ -6,9 +6,9 @@ import com.Ventas.model.Producto;
 
 public interface ProductoService {
 
-	List<Producto> listarProductos();
-	Producto registrarProducto(Producto p);
-	Producto buscarProducto(String id);
-	Producto actualizarProducto(Producto p);
-    boolean eliminarProducto(String id);
+	public List<Producto> listarProductos();
+	public Producto registrarProducto(Producto p);
+	public Producto buscarProducto(String id);
+	public Producto actualizarProducto(Producto p);
+	public boolean eliminarProducto(String id);
 }

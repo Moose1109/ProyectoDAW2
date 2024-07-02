@@ -1,6 +1,7 @@
 package com.Ventas.controller;
 
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,40 +64,49 @@ private ProductoService service;
 	}
 	
 	// Registrar un nuevo producto
-		@PostMapping
-		public ResponseEntity<Producto> registrarProducto(
-				@RequestBody Producto producto) {
-			Producto nuevoProducto = service.registrarProducto(producto);
-			return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
-		}
+	@PostMapping
+	public ResponseEntity<Producto> registrarProducto(
+			@RequestBody Producto producto) {
+		Producto nuevoProducto = service.registrarProducto(producto);
+		return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
+	}
 
-		@GetMapping("/{id}")
-		public ResponseEntity<Producto> buscarProducto(
-				@PathVariable String id) {
-			return ResponseEntity.ok(service.buscarProducto(id));
-		}
+	@GetMapping("/{id}")
+	public ResponseEntity<Producto> buscarProducto(
+			@PathVariable String id) {
+		return ResponseEntity.ok(service.buscarProducto(id));
+	}
 
-		@PutMapping("/{id}")
-		public ResponseEntity<Producto> actualizar(
-				@PathVariable String id,
-				@RequestBody Producto producto) {
-				Producto p = service.buscarProducto(id);
-				p.setNomproducto(producto.getNomproducto());
-				p.setIdcategoria(producto.getIdcategoria());
-				p.setPrecio(producto.getPrecio());
-				p.setStock(producto.getStock());
-				p.setEstado(producto.getEstado());
-				service.actualizarProducto(p);
+	@PutMapping("/{id}")
+	public ResponseEntity<Producto> actualizar(
+			@PathVariable String id,
+			@RequestBody Producto producto) {
+			Producto p = service.buscarProducto(id);
+			p.setNomproducto(producto.getNomproducto());
+			p.setIdcategoria(producto.getIdcategoria());
+			p.setPrecio(producto.getPrecio());
+			p.setStock(producto.getStock());
+			p.setEstado(producto.getEstado());
+			service.actualizarProducto(p);
 
-				return new ResponseEntity<>(p, HttpStatus.CREATED);
-		}
+			return new ResponseEntity<>(p, HttpStatus.CREATED);
+	}
 
-		// Eliminar un producto por su ID
-		@DeleteMapping("/{id}")
-		public ResponseEntity<Void> eliminarProducto(@PathVariable String id) {
-			service.eliminarProducto(id);
-			return ResponseEntity.noContent().build();
-		}
+	// Eliminar un producto por su ID
+	@DeleteMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<?> eliminarProducto(@PathVariable String id) {
+		String mensaje = "Producto eliminado correctamente";
+        HashMap<String, Object> salida = new HashMap<>();
+        try {
+            service.eliminarProducto(id);
+            mensaje = "Se elimino correctamente";
+        } catch (Exception ex) {
+            mensaje = "Error al eliminar el producto: " + ex.getMessage();
+        }
+        salida.put("mensaje", mensaje);
+        return ResponseEntity.ok(salida) ;
+	}
 	
 
 /*=========================================================================*/		
