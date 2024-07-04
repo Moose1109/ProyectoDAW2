@@ -16,4 +16,6 @@ public interface EmpleadoService {
 	
 	public void eliminarEmpleados(String id);
 	
+	public Empleados login(String usuario, String pass);
+	
 }

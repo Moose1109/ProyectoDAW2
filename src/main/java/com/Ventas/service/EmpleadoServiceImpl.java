@@ -44,6 +44,10 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 		repoEmp.deleteById(id);
 	}
 
+	@Override
+	public Empleados login(String usuario, String pass) {
+		return repoEmp.findByUsuarioAndPass(usuario, pass);
+	}
 
 
 

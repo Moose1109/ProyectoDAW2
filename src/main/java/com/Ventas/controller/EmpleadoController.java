@@ -90,7 +90,32 @@ public class EmpleadoController {
         return ResponseEntity.ok(salida) ;
     }
 	
+	//===============LOGIN================
 	
+	@PostMapping("/guardar")
+	public ResponseEntity<?> agregarEmp (@RequestBody Empleados e) {
+		Empleados emp = service.agregarEmpleados(e);
+		return ResponseEntity.ok(emp);
+	}
+	
+	/*@PostMapping("/login")
+	public ResponseEntity<?> login (@RequestParam String usuario,
+			@RequestParam String pass) {
+		Empleados emp = service.login(usuario, pass);
+		return ResponseEntity.ok(emp);
+	}*/
+	
+	@PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String usuario, @RequestParam String pass) {
+        Empleados emp = service.login(usuario, pass);
+        if (emp != null) {
+            return ResponseEntity.ok(emp);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o clave incorrecto(as)");
+        }
+    }
+	
+	//===============LOGIN-END================
 	
 	
 	/*@GetMapping("/cargaLogin")
